@@ -1,3 +1,8 @@
+import './styles.css';
+import './ds-theme.css';
+import './ig-overrides.css';
+import './ig-light.css';
+
 const header = document.querySelector('[data-header]');
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const nav = document.querySelector('[data-nav]');
