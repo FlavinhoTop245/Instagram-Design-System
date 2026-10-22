@@ -1,22 +1,25 @@
 # Instagram Design System
 
-Site informativo e responsivo sobre o Instagram, criado com uma linguagem editorial digital inspirada na identidade visual da rede: gradientes vibrantes, tipografia limpa, cantos arredondados e microinterações suaves.
+Catálogo interativo de Design System extraído com a skill **extract-ds**, acompanhado de um site informativo sobre o Instagram construído reutilizando os mesmos tokens visuais.
 
-## Desenvolvimento local
+## Como executar localmente
 
 ```bash
 npm install
 npm run dev
 ```
 
-Para gerar a versão de produção:
-
-```bash
-npm run build
-```
+O site principal fica em `http://localhost:3000/`. O catálogo do Design System fica em `http://localhost:3000/design-system.html#overview` e `http://localhost:3000/design-system.html#components`.
 
 ## Publicação
 
 O workflow em `.github/workflows/deploy-pages.yml` publica automaticamente o conteúdo de `dist/` no GitHub Pages a cada push em `main`.
 
 Site: https://flavinhotop245.github.io/Instagram-Design-System/
+
+## Estrutura
+
+- `index.html`: site informativo do Instagram.
+- `design-system.html`: catálogo principal com Overview e Components.
+- `assets/overview/index.html`: cópia funcional usada pelo catálogo.
+- `src/`: estilos e interações do site principal.
