@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#090909] text-white">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopify Design System</title>
+  <link rel="stylesheet" href="https://cdn.shopify.com/oxygen-v2/51271/91735/189252/4804340/assets/tailwind-vOc3OfBK.css">
+  <link rel="stylesheet" href="https://cdn.shopify.com/oxygen-v2/51271/91735/189252/4804340/assets/fonts-latin-Hwnc9bw-.css">
+  <style>
+    :root {
+      --bg-base: #090909;
+      --bg-surface: #141414;
+      --bg-surface-elevated: #1e1e1e;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(255, 255, 255, 0.4);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.45);
+      --brand-green: #95BF47;
+      --brand-green-dark: #5E8E3E;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Catalog Bar */
+    .catalog-nav {
+      height: 52px;
+      background-color: rgba(9, 9, 9, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      flex-shrink: 0;
+    }
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .brand-logo svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--brand-green);
+    }
+    .brand-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+    .brand-badge {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 9999px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.65);
+      transition: all 0.15s ease;
+      user-select: none;
+      cursor: pointer;
+    }
+    .nav-tab:hover {
+      color: #ffffff;
+    }
+    .nav-tab.active {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Views */
+    .view-container {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 52px);
+      position: relative;
+    }
+    #view-overview, #view-components {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+    }
+    #view-overview {
+      display: none;
+    }
+    #view-overview.active {
+      display: block;
+    }
+    #view-components {
+      display: none;
+    }
+    #view-components.active {
+      display: flex;
+    }
+    .overview-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Components View Layout */
+    .components-sidebar {
+      width: 250px;
+      height: 100%;
+      overflow-y: auto;
+      border-right: 1px solid var(--border-subtle);
+      background: rgba(9, 9, 9, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 24px 16px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .sidebar-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 16px 8px 8px 8px;
+    }
+    .sidebar-link {
+      display: block;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.12s ease;
+      margin-bottom: 2px;
+    }
+    .sidebar-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .sidebar-link.active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      font-weight: 500;
+    }
+
+    .components-main {
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;
+      padding: 40px 60px 100px;
+      position: relative;
+      scroll-behavior: smooth;
+    }
+
+    /* Principal animated background from Overview */
+    .components-bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background: #090909;
+    }
+    .page-loading-particle-rain {
+      width: 100%;
+      height: 100%;
+      opacity: 0.28;
+    }
+    .page-loading-rain-dot {
+      fill: #ffffff;
+      opacity: var(--alpha);
+      animation: page-loading-rain-rise var(--duration) linear var(--delay) infinite;
+    }
+    @keyframes page-loading-rain-rise {
+      0% {
+        transform: translate(calc(var(--drift) * -0.5px), calc(var(--travel) * 0.5px));
+      }
+      100% {
+        transform: translate(calc(var(--drift) * 0.5px), calc(var(--travel) * -0.5px));
+      }
+    }
+
+    /* Content sections */
+    .components-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    .group-section {
+      margin-bottom: 64px;
+      scroll-margin-top: 24px;
+    }
+    .group-header {
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .group-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin: 0 0 6px 0;
+    }
+    .group-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Specimen item */
+    .specimen-card {
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .specimen-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+    }
+    .specimen-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .specimen-meta {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .specimen-body {
+      padding: 8px 0;
+    }
+
+    /* Typography 3-column rows */
+    .type-table {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      background: rgba(16, 16, 16, 0.7);
+      overflow: hidden;
+    }
+    .type-row {
+      display: grid;
+      grid-template-columns: 220px 1fr 180px;
+      align-items: center;
+      gap: 24px;
+      padding: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .type-row:last-child {
+      border-bottom: none;
+    }
+    .type-col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .type-role {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .type-font {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .type-col-center {
+      overflow: hidden;
+      min-width: 0;
+    }
+    .type-col-right {
+      text-align: right;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Colors Grid */
+    .color-family-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .color-card {
+      background: rgba(16, 16, 16, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .color-swatch {
+      height: 48px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 8px;
+    }
+    .color-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .color-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .color-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .color-token {
+      font-size: 11px;
+      color: var(--brand-green);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .color-use {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Icons grid */
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .icon-box {
+      background: rgba(16, 16, 16, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+    }
+    .icon-box svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+    .icon-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+
+    /* Live Specimens */
+    .specimen-demo-box {
+      border: 1px dashed var(--border-subtle);
+      border-radius: 6px;
+      padding: 32px;
+      background: rgba(9, 9, 9, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="catalog-nav">
+    <div class="brand-section">
+      <a href="#overview" class="brand-logo">
+        <svg viewBox="0 0 109 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M75.3 15.6C75.1 15.6 74.8 15.7 74.6 15.8C73.8 12.1 71.4 5.3 64.2 1.3C57.4 -2.4 49.3 1.2 46.1 4.5C41.7 8.9 40.1 15.1 39.5 19.3C33.7 21.1 29.8 22.3 29.6 22.4C27.4 23.1 27.2 23.3 26.6 25.4L1.7 114.7C1.2 116.5 2.1 118.2 3.8 118.6C4 118.6 4.3 118.7 4.5 118.7L71.4 123.9C71.7 123.9 72 123.9 72.3 123.9C74.3 123.7 75.8 122.1 76 120.1L97.5 27.2C97.6 26.6 97.4 25.9 96.9 25.5C96.4 25.1 95.8 24.9 95.2 25.1C94.9 25.2 88.5 27.3 78.4 30.5C77.4 24.6 76 17.5 75.3 15.6ZM59.3 17.4C53.7 19.1 48.7 20.7 44.5 22C45.3 17 48.2 11.7 52.8 9.3C56.6 7.4 60.6 8.9 61.9 11.3C62.7 12.9 62.4 15.5 59.3 17.4Z" fill="#95BF47"/>
+          <path d="M96.9 25.5C96.4 25.1 95.8 24.9 95.2 25.1C94.9 25.2 88.5 27.3 78.4 30.5L62.7 93.9L80.2 113.6L97.5 27.2C97.6 26.6 97.4 25.9 96.9 25.5Z" fill="#5E8E3E"/>
+          <path d="M52.3 38.6L41.3 42C43.5 50.8 45.4 61.4 46.8 71.9L55.7 68.7C54.4 58.4 53.1 48.1 52.3 38.6Z" fill="#FFFFFF"/>
+        </svg>
+        <span class="brand-title">Shopify</span>
+      </a>
+      <span class="brand-badge">Design System</span>
+    </div>
+
+    <nav class="nav-tabs" aria-label="Catalog Navigation">
+      <a href="#overview" id="tab-overview" class="nav-tab active">Overview</a>
+      <a href="#components" id="tab-components" class="nav-tab">Components</a>
+    </nav>
+  </header>
+
+  <main class="view-container">
+    <!-- VIEW 1: OVERVIEW IFRAME -->
+    <div id="view-overview" class="active">
+      <iframe id="overview-iframe" class="overview-frame" src="./assets/overview/index.html" title="Shopify Design System Overview"></iframe>
+    </div>
+
+    <!-- VIEW 2: COMPONENTS CATALOG -->
+    <div id="view-components">
+      <!-- Animated Background Canvas (Particle Rain) -->
+      <div class="components-bg-canvas" aria-hidden="true">
+        <svg class="page-loading-particle-rain" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <circle class="page-loading-rain-dot" cx="20" cy="80" r="1.4" style="--delay:-1.2s;--duration:4.2s;--travel:420;--drift:-4;--alpha:0.9"></circle>
+            <circle class="page-loading-rain-dot" cx="65" cy="40" r="1.6" style="--delay:-2.8s;--duration:3.6s;--travel:400;--drift:5;--alpha:1.0"></circle>
+            <circle class="page-loading-rain-dot" cx="110" cy="110" r="1.3" style="--delay:-0.5s;--duration:5.1s;--travel:440;--drift:-3;--alpha:0.7"></circle>
+            <circle class="page-loading-rain-dot" cx="140" cy="60" r="1.5" style="--delay:-3.1s;--duration:3.9s;--travel:410;--drift:4;--alpha:0.85"></circle>
+            <circle class="page-loading-rain-dot" cx="85" cy="130" r="1.2" style="--delay:-1.9s;--duration:4.8s;--travel:430;--drift:2;--alpha:0.6"></circle>
+            <circle class="page-loading-rain-dot" cx="35" cy="10" r="1.5" style="--delay:-0.8s;--duration:4.0s;--travel:390;--drift:-5;--alpha:0.95"></circle>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Sticky Left Sidebar -->
+      <aside class="components-sidebar">
+        <div class="sidebar-section-title">Foundations</div>
+        <a href="#spec-backgrounds" class="sidebar-link active">Backgrounds</a>
+        <a href="#spec-typography" class="sidebar-link">Typography</a>
+        <a href="#spec-colors" class="sidebar-link">Colors</a>
+        <a href="#spec-surfaces" class="sidebar-link">Surfaces</a>
+        <a href="#spec-icons" class="sidebar-link">Icons</a>
+
+        <div class="sidebar-section-title">Components</div>
+        <a href="#spec-actions" class="sidebar-link">Actions & Buttons</a>
+        <a href="#spec-navigation" class="sidebar-link">Navigation</a>
+        <a href="#spec-cards" class="sidebar-link">Cards & Containers</a>
+        <a href="#spec-feedback" class="sidebar-link">Feedback & Modals</a>
+      </aside>
+
+      <!-- Main Stacked Groups Area -->
+      <main class="components-main">
+        <div class="components-content">
+
+          <!-- 1. BACKGROUNDS -->
+          <section id="spec-backgrounds" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Backgrounds</h2>
+              <p class="group-desc">Core ambient canvases and surface depths observed in Overview.</p>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Obsidian Canvas with Ambient Particle Rain</span>
+                <span class="specimen-meta">#090909 + .page-loading-particle-rain</span>
+              </div>
+              <div class="specimen-body">
+                <div style="height: 180px; position: relative; border-radius: 6px; background-color: #090909; overflow: hidden; border: 1px solid var(--border-subtle);">
+                  <svg class="page-loading-particle-rain" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg" style="opacity:0.8;">
+                    <g>
+                      <circle class="page-loading-rain-dot" cx="30" cy="50" r="1.5" style="--delay:-1.2s;--duration:3.5s;--travel:400;--drift:-4;--alpha:1.0"></circle>
+                      <circle class="page-loading-rain-dot" cx="80" cy="90" r="1.3" style="--delay:-2.5s;--duration:4.0s;--travel:420;--drift:5;--alpha:0.85"></circle>
+                      <circle class="page-loading-rain-dot" cx="130" cy="30" r="1.6" style="--delay:-0.5s;--duration:3.2s;--travel:390;--drift:-3;--alpha:0.95"></circle>
+                    </g>
+                  </svg>
+                  <div style="position: absolute; bottom: 16px; left: 20px; font-size: 13px; color: rgba(255,255,255,0.7);">
+                    Live particle rain animation with floating rising particles and velocity vectors.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Linear Scrim Gradient</span>
+                <span class="specimen-meta">bg-linear-to-b from-black/30 to-transparent</span>
+              </div>
+              <div class="specimen-body">
+                <div style="height: 100px; border-radius: 6px; background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 13px;">
+                  Top navigation scrim overlay for text contrast over media.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. TYPOGRAPHY -->
+          <section id="spec-typography" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Typography</h2>
+              <p class="group-desc">Hierarchical type scales ordered from strongest to smallest using National2 and ShopifyInter.</p>
+            </div>
+
+            <div class="type-table">
+              <!-- Heading 1 -->
+              <div class="type-row">
+                <div class="type-col-left">
+                  <span class="type-role">Heading 1 / Display</span>
+                  <span class="type-font">National2, 500</span>
+                  <span class="specimen-meta" style="align-self: flex-start; margin-top: 4px;">.t1</span>
+                </div>
+                <div class="type-col-center">
+                  <div class="t1 text-w100" style="font-size: 48px; line-height: 0.96; letter-spacing: -0.06em;">Shopify Editions</div>
+                </div>
+                <div class="type-col-right">
+                  clamp(5rem, 34px + 6vw, 7.5rem) | 80px
+                </div>
+              </div>
+
+              <!-- Heading 2 -->
+              <div class="type-row">
+                <div class="type-col-left">
+                  <span class="type-role">Heading 2 / Section</span>
+                  <span class="type-font">National2, 500</span>
+                  <span class="specimen-meta" style="align-self: flex-start; margin-top: 4px;">.t2</span>
+                </div>
+                <div class="type-col-center">
+                  <div class="t2 text-w100" style="font-size: 36px; line-height: 0.96; letter-spacing: -0.06em;">Agentic Commerce</div>
+                </div>
+                <div class="type-col-right">
+                  clamp(4rem, 27px + 4.7vw, 6rem) | 64px
+                </div>
+              </div>
+
+              <!-- Heading 3 -->
+              <div class="type-row">
+                <div class="type-col-left">
+                  <span class="type-role">Heading 3 / Feature</span>
+                  <span class="type-font">National2, 500</span>
+                  <span class="specimen-meta" style="align-self: flex-start; margin-top: 4px;">.t3</span>
+                </div>
+                <div class="type-col-center">
+                  <div class="t3 text-w100" style="font-size: 26px; line-height: 0.96; letter-spacing: -0.03em;">Your products optimized for AI</div>
+                </div>
+                <div class="type-col-right">
+                  clamp(2.5rem, 12px + 3.5vw, 4rem) | 40px
+                </div>
+              </div>
+
+              <!-- Text 1 -->
+              <div class="type-row">
+                <div class="type-col-left">
+                  <span class="type-role">Subheading / Lead</span>
+                  <span class="type-font">ShopifyInter, 400</span>
+                  <span class="specimen-meta" style="align-self: flex-start; margin-top: 4px;">.t4</span>
+                </div>
+                <div class="type-col-center">
+                  <div class="t4 text-w100" style="color: rgba(255,255,255,0.9);">150+ updates to sell, shop, and build everywhere across modern surfaces.</div>
+                </div>
+                <div class="type-col-right">
+                  18px | 16px
+                </div>
+              </div>
+
+              <!-- Text 2 -->
+              <div class="type-row">
+                <div class="type-col-left">
+                  <span class="type-role">Body & Navigation</span>
+                  <span class="type-font">ShopifyInter, 400</span>
+                  <span class="specimen-meta" style="align-self: flex-start; margin-top: 4px;">.t5</span>
+                </div>
+                <div class="type-col-center">
+                  <div class="t5" style="color: rgba(255,255,255,0.7); max-width: 580px;">Sell face to face, online, on social channels, and AI chats with updates to Shopify. The single platform you need to sell everywhere.</div>
+                </div>
+                <div class="type-col-right">
+                  15px | 14px
+                </div>
+              </div>
+
+              <!-- Interactive Link -->
+              <div class="type-row">
+                <div class="type-col-left">
+                  <span class="type-role">Interactive Link</span>
+                  <span class="type-font">ShopifyInter, 500</span>
+                  <span class="specimen-meta" style="align-self: flex-start; margin-top: 4px;">.text-theme-link</span>
+                </div>
+                <div class="type-col-center">
+                  <a href="#" class="[text-box:normal] t5 text-theme-link hero-reveal-underline inline-block no-underline" style="color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px;">Read developer documentation &rarr;</a>
+                </div>
+                <div class="type-col-right">
+                  15px
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. COLORS -->
+          <section id="spec-colors" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Colors</h2>
+              <p class="group-desc">Evidence-based functional color tokens and active CSS values.</p>
+            </div>
+
+            <!-- Brand & Accent -->
+            <h3 class="text-sm font-semibold tracking-wider text-muted uppercase mb-12">Brand & Accent</h3>
+            <div class="color-family-grid">
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #95BF47;"></div>
+                <div class="color-info">
+                  <span class="color-label">Brand Primary</span>
+                  <span class="color-value">#95BF47</span>
+                  <span class="color-token">--brand-green / #95BF47</span>
+                  <span class="color-use">Shopify signature logo bag and primary branding glyph.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #5E8E3E;"></div>
+                <div class="color-info">
+                  <span class="color-label">Brand Dark Shade</span>
+                  <span class="color-value">#5E8E3E</span>
+                  <span class="color-token">--brand-green-dark / #5E8E3E</span>
+                  <span class="color-use">Logo shadow fold and secondary brand contrast.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: rgba(255, 255, 255, 0.4); border: 1px solid #fff;"></div>
+                <div class="color-info">
+                  <span class="color-label">Theme Focus Ring</span>
+                  <span class="color-value">rgba(255, 255, 255, 0.4)</span>
+                  <span class="color-token">--theme-focus-ring</span>
+                  <span class="color-use">Accessible keyboard focus indicator on interactive elements.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Surfaces -->
+            <h3 class="text-sm font-semibold tracking-wider text-muted uppercase mb-12">Surfaces</h3>
+            <div class="color-family-grid">
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #090909;"></div>
+                <div class="color-info">
+                  <span class="color-label">Base Canvas Surface</span>
+                  <span class="color-value">#090909</span>
+                  <span class="color-token">.bg-b100</span>
+                  <span class="color-use">Deep obsidian base viewport background across all sections.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #ffffff;"></div>
+                <div class="color-info">
+                  <span class="color-label">Elevated Light Surface</span>
+                  <span class="color-value">#ffffff</span>
+                  <span class="color-token">.bg-w100</span>
+                  <span class="color-use">High-contrast product modals, light dialogs and pill buttons.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: rgba(9, 9, 9, 0.70);"></div>
+                <div class="color-info">
+                  <span class="color-label">Modal Scrim Backdrop</span>
+                  <span class="color-value">rgba(9, 9, 9, 0.70)</span>
+                  <span class="color-token">.bg-b100/70</span>
+                  <span class="color-use">Backdrop overlay covering viewport behind active modal dialogs.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text & Icons -->
+            <h3 class="text-sm font-semibold tracking-wider text-muted uppercase mb-12">Text & Icons</h3>
+            <div class="color-family-grid">
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #090909; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600;">Text</div>
+                <div class="color-info">
+                  <span class="color-label">Primary Light Text</span>
+                  <span class="color-value">#ffffff</span>
+                  <span class="color-token">.text-w100</span>
+                  <span class="color-use">Primary titles, headings, and high-contrast labels on dark surfaces.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #ffffff; display: flex; align-items: center; justify-content: center; color: #090909; font-weight: 600;">Text</div>
+                <div class="color-info">
+                  <span class="color-label">Primary Dark Text</span>
+                  <span class="color-value">#090909</span>
+                  <span class="color-token">.text-b100</span>
+                  <span class="color-use">Headings and paragraphs inside light modals and floating nav pill.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: #090909; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.7);">Text</div>
+                <div class="color-info">
+                  <span class="color-label">Secondary Muted Text</span>
+                  <span class="color-value">rgba(255, 255, 255, 0.70)</span>
+                  <span class="color-token">opacity-70</span>
+                  <span class="color-use">Supporting paragraphs, pill labels and meta timestamps.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive State Family -->
+            <h3 class="text-sm font-semibold tracking-wider text-muted uppercase mb-12">Interactive State Family (Pill & Controls)</h3>
+            <div class="color-family-grid">
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);"></div>
+                <div class="color-info">
+                  <span class="color-label">Default State</span>
+                  <span class="color-value">rgba(255, 255, 255, 0.06)</span>
+                  <span class="color-use">Unselected pill or button container.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);"></div>
+                <div class="color-info">
+                  <span class="color-label">Hover State</span>
+                  <span class="color-value">rgba(255, 255, 255, 0.15)</span>
+                  <span class="color-use">Pointer hover transition state.</span>
+                </div>
+              </div>
+
+              <div class="color-card">
+                <div class="color-swatch" style="background-color: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.3);"></div>
+                <div class="color-info">
+                  <span class="color-label">Active / Pressed</span>
+                  <span class="color-value">rgba(255, 255, 255, 0.25)</span>
+                  <span class="color-use">Active click interaction state.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. SURFACES -->
+          <section id="spec-surfaces" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Surfaces</h2>
+              <p class="group-desc">Observed containers with real borders, blurs, and corner radiuses.</p>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Floating Pill Surface</span>
+                <span class="specimen-meta">.pill rounded-full bg-w100/10 border-w100/15</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box">
+                  <div style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 9999px; padding: 8px 24px; display: flex; align-items: center; gap: 16px; color: #fff;">
+                    <span style="font-size: 13px; font-weight: 500;">Section Navigation</span>
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--brand-green);"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Elevated Light Dialog Surface</span>
+                <span class="specimen-meta">bg-w100 rounded-[3px] p-32 text-b100</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box" style="background: rgba(9, 9, 9, 0.8);">
+                  <div style="background: #ffffff; color: #090909; border-radius: 3px; padding: 24px 32px; width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                      <span style="font-size: 16px; font-weight: 600;">Product Insight</span>
+                      <button style="border: none; background: transparent; cursor: pointer; padding: 4px;">
+                        <svg viewBox="0 0 13 13" width="13" height="13" fill="none"><path d="M11.4598 0.146373C11.655 -0.0487994 11.9716 -0.0486195 12.1669 0.146373C12.3621 0.341635 12.3621 0.658142 12.1669 0.853404L6.86317 6.15614L12.1669 11.4598C12.3621 11.6551 12.3621 11.9716 12.1669 12.1669C11.9716 12.3621 11.655 12.3621 11.4598 12.1669L6.15607 6.86317L0.853303 12.1669C0.658041 12.3621 0.341534 12.3621 0.146272 12.1669C-0.0487407 11.9716 -0.0487407 11.6551 0.146272 11.4598L5.44904 6.15614L0.146272 0.853404C-0.0487407 0.658142 -0.0487407 0.341635 0.146272 0.146373C0.341534 -0.0488889 0.658041 -0.0488889 0.853303 0.146373L6.15607 5.44911L11.4598 0.146373Z" fill="#090909"/></svg>
+                      </button>
+                    </div>
+                    <p style="font-size: 13px; color: rgba(9, 9, 9, 0.7); margin: 0; line-height: 1.4;">Structured catalog representations available across AI agent platforms.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. ICONS -->
+          <section id="spec-icons" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Icons</h2>
+              <p class="group-desc">Original SVGs extracted directly from Overview in a 5-column grid.</p>
+            </div>
+
+            <div class="icons-grid">
+              <div class="icon-box">
+                <svg viewBox="0 0 109 124" fill="none">
+                  <path d="M75.3 15.6C75.1 15.6 74.8 15.7 74.6 15.8C73.8 12.1 71.4 5.3 64.2 1.3C57.4 -2.4 49.3 1.2 46.1 4.5C41.7 8.9 40.1 15.1 39.5 19.3C33.7 21.1 29.8 22.3 29.6 22.4C27.4 23.1 27.2 23.3 26.6 25.4L1.7 114.7C1.2 116.5 2.1 118.2 3.8 118.6C4 118.6 4.3 118.7 4.5 118.7L71.4 123.9C71.7 123.9 72 123.9 72.3 123.9C74.3 123.7 75.8 122.1 76 120.1L97.5 27.2C97.6 26.6 97.4 25.9 96.9 25.5C96.4 25.1 95.8 24.9 95.2 25.1C94.9 25.2 88.5 27.3 78.4 30.5C77.4 24.6 76 17.5 75.3 15.6ZM59.3 17.4C53.7 19.1 48.7 20.7 44.5 22C45.3 17 48.2 11.7 52.8 9.3C56.6 7.4 60.6 8.9 61.9 11.3C62.7 12.9 62.4 15.5 59.3 17.4Z" fill="#95BF47"/>
+                </svg>
+                <span class="icon-label">shopify-bag</span>
+              </div>
+
+              <div class="icon-box">
+                <svg viewBox="0 0 13 13" fill="none">
+                  <path d="M11.4598 0.146373C11.655 -0.0487994 11.9716 -0.0486195 12.1669 0.146373C12.3621 0.341635 12.3621 0.658142 12.1669 0.853404L6.86317 6.15614L12.1669 11.4598C12.3621 11.6551 12.3621 11.9716 12.1669 12.1669C11.9716 12.3621 11.655 12.3621 11.4598 12.1669L6.15607 6.86317L0.853303 12.1669C0.658041 12.3621 0.341534 12.3621 0.146272 12.1669C-0.0487407 11.9716 -0.0487407 11.6551 0.146272 11.4598L5.44904 6.15614L0.146272 0.853404C-0.0487407 0.658142 -0.0487407 0.341635 0.146272 0.146373C0.341534 -0.0488889 0.658041 -0.0488889 0.853303 0.146373L6.15607 5.44911L11.4598 0.146373Z" fill="currentColor"/>
+                </svg>
+                <span class="icon-label">close-x</span>
+              </div>
+
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M23.4 11.6536C23.6667 11.8076 23.6667 12.1925 23.4 12.3464L6.6 22.0459C6.33333 22.1999 6 22.0074 6 21.6995L6 2.30051C6 1.99259 6.33333 1.80014 6.6 1.9541L23.4 11.6536Z" fill="currentColor"/>
+                </svg>
+                <span class="icon-label">play-arrow</span>
+              </div>
+
+              <div class="icon-box">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="icon-label">arrow-external</span>
+              </div>
+
+              <div class="icon-box">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="icon-label">chevron-down</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6. ACTIONS & BUTTONS -->
+          <section id="spec-actions" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Actions & Buttons</h2>
+              <p class="group-desc">Interactive triggers and button specimens from Overview.</p>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">CTA XXL Pill Button</span>
+                <span class="specimen-meta">data-component-name="cta-xxl-button"</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box">
+                  <a href="#" class="rounded-full outline-none focus-visible:ring-2 transition-colors inline-flex items-center justify-center font-medium" style="background: #ffffff; color: #090909; padding: 12px 28px; font-size: 14px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                    Explore Spring Edition
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Video Play Trigger Button</span>
+                <span class="specimen-meta">data-component-name="cta-open-video-modal"</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box">
+                  <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M23.4 11.6536C23.6667 11.8076 23.6667 12.1925 23.4 12.3464L6.6 22.0459C6.33333 22.1999 6 22.0074 6 21.6995L6 2.30051C6 1.99259 6.33333 1.80014 6.6 1.9541L23.4 11.6536Z" fill="#ffffff"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7. NAVIGATION -->
+          <section id="spec-navigation" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Navigation</h2>
+              <p class="group-desc">Section pills and hero navigational link structures.</p>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Floating Nav Pill</span>
+                <span class="specimen-meta">data-component-name="nav-pill"</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box">
+                  <nav aria-label="Floating section navigation" class="pill relative grid content-end overflow-hidden" style="width: 220px; background: rgba(255,255,255,0.95); color: #090909; border-radius: 9999px; padding: 6px 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                      <span style="font-size: 13px; font-weight: 600;">Agentic Commerce</span>
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M6 8L10 12L14 8" stroke="#090909" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 8. CARDS & CONTAINERS -->
+          <section id="spec-cards" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Cards & Containers</h2>
+              <p class="group-desc">Feature product card specimen with media preview, typography, and action link.</p>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Feature Product Card</span>
+                <span class="specimen-meta">data-component-name="product"</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box" style="padding: 24px;">
+                  <article style="max-width: 540px; width: 100%; border: 1px solid rgba(255,255,255,0.08); background: rgba(16, 16, 16, 0.85); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+                    <div style="height: 220px; background: #121212; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                      <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M23.4 11.6536C23.6667 11.8076 23.6667 12.1925 23.4 12.3464L6.6 22.0459C6.33333 22.1999 6 22.0074 6 21.6995L6 2.30051C6 1.99259 6.33333 1.80014 6.6 1.9541L23.4 11.6536Z" fill="#ffffff"/></svg>
+                      </div>
+                      <span style="position: absolute; top: 14px; left: 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 4px; color: rgba(255,255,255,0.8);">Feature Specimen</span>
+                    </div>
+                    <div style="padding: 24px;">
+                      <h4 class="t3" style="font-size: 20px; margin: 0 0 8px 0; color: #ffffff;">The open protocol for agentic commerce</h4>
+                      <p class="t5" style="font-size: 14px; color: rgba(255,255,255,0.65); margin: 0 0 16px 0; line-height: 1.5;">Structured data protocol enabling autonomous agents to query inventories, process checkouts, and finalize transactions.</p>
+                      <a href="#" style="font-size: 13px; font-weight: 500; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px;">Read documentation &rarr;</a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 9. FEEDBACK & MODALS -->
+          <section id="spec-feedback" class="group-section">
+            <div class="group-header">
+              <h2 class="group-title">Feedback & Modals</h2>
+              <p class="group-desc">Tooltips and modal dialog components extracted from Overview.</p>
+            </div>
+
+            <div class="specimen-card">
+              <div class="specimen-header">
+                <span class="specimen-name">Shared Tooltip Bubble</span>
+                <span class="specimen-meta">class="shared-tooltip"</span>
+              </div>
+              <div class="specimen-body">
+                <div class="specimen-demo-box">
+                  <div style="position: relative; display: inline-block;">
+                    <div style="background: #ffffff; color: #090909; font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 6px;">
+                      <span>Open Section Overview</span>
+                    </div>
+                    <div style="position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 8px; height: 8px; background: #ffffff;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  </main>
+
+  <script>
+    function handleRouting() {
+      const hash = window.location.hash || '#overview';
+      const tabOverview = document.getElementById('tab-overview');
+      const tabComponents = document.getElementById('tab-components');
+      const viewOverview = document.getElementById('view-overview');
+      const viewComponents = document.getElementById('view-components');
+
+      if (hash.startsWith('#spec-') || hash === '#components') {
+        tabOverview.classList.remove('active');
+        tabComponents.classList.add('active');
+        viewOverview.classList.remove('active');
+        viewComponents.classList.add('active');
+
+        if (hash.startsWith('#spec-')) {
+          const target = document.querySelector(hash);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+          // Highlight active link in sidebar
+          document.querySelectorAll('.sidebar-link').forEach(link => {
+            if (link.getAttribute('href') === hash) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      } else {
+        tabComponents.classList.remove('active');
+        tabOverview.classList.add('active');
+        viewComponents.classList.remove('active');
+        viewOverview.classList.add('active');
+      }
+    }
+
+    // Sidebar active link update on scroll
+    const mainContainer = document.querySelector('.components-main');
+    if (mainContainer) {
+      mainContainer.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('.group-section');
+        let current = '';
+        sections.forEach(section => {
+          const top = section.offsetTop - mainContainer.offsetTop;
+          if (mainContainer.scrollTop >= top - 60) {
+            current = '#' + section.getAttribute('id');
+          }
+        });
+        if (current) {
+          document.querySelectorAll('.sidebar-link').forEach(link => {
+            if (link.getAttribute('href') === current) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }
+
+    window.addEventListener('hashchange', handleRouting);
+    window.addEventListener('DOMContentLoaded', handleRouting);
+  </script>
+</body>
+</html>
