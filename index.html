@@ -4,15 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Um guia visual e compacto sobre as funções, objetivos e utilidades do Instagram." />
-    <meta name="theme-color" content="#f6f3ef" />
+    <meta name="theme-color" content="#090909" />
     <title>Instagram — Conecte o que importa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/styles.css" />
     <link rel="stylesheet" href="/src/ds-theme.css" />
+    <link rel="stylesheet" href="/src/ig-overrides.css" />
   </head>
   <body>
+    <span class="cursor-dot" aria-hidden="true"></span>
+    <span class="cursor-ring" aria-hidden="true"></span>
+    <span class="cursor-glow" aria-hidden="true"></span>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
     <header class="site-header" data-header>
       <a class="brand" href="#inicio" aria-label="Instagram — voltar ao início">
@@ -28,7 +32,7 @@
         <a href="#formatos">Formatos</a>
         <a href="#objetivos">Por que usar</a>
         <a href="#comunidade">Comunidade</a>
-        <a class="nav-pill" href="#acesso">Conhecer o app <span aria-hidden="true">↗</span></a>
+        <a class="nav-pill" href="#acesso" data-magnetic>Conhecer o app <span aria-hidden="true">↗</span></a>
       </nav>
     </header>
 
@@ -39,7 +43,7 @@
           <h1 id="hero-title">Onde o seu olhar encontra <em>o que importa.</em></h1>
           <p class="hero-intro">O Instagram é um espaço para compartilhar momentos, descobrir novas perspectivas e manter por perto as pessoas, ideias e comunidades que fazem sentido para você.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#funcoes">Explorar funções <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="#funcoes" data-magnetic>Explorar funções <span aria-hidden="true">↓</span></a>
             <a class="text-link" href="#objetivos">Entender o Instagram <span aria-hidden="true">↗</span></a>
           </div>
           <div class="hero-note"><span class="mini-avatar avatar-sun"></span><span>Uma rede para criar, conversar e descobrir.</span></div>
@@ -48,7 +52,7 @@
         <div class="hero-stage reveal reveal-delay" aria-label="Composição visual com a interface do Instagram">
           <div class="sun-burst" aria-hidden="true"></div>
           <div class="stage-label stage-label-top">visualize<br /><strong>o seu mundo</strong></div>
-          <div class="phone-frame">
+          <div class="phone-frame" data-tilt>
             <div class="phone-speaker" aria-hidden="true"></div>
             <div class="phone-screen">
               <div class="phone-topbar"><span class="phone-wordmark">instagram</span><span class="phone-icons">♡　⌕</span></div>
@@ -79,10 +83,10 @@
           <p class="section-summary">Do primeiro post à conversa que continua no direct, o Instagram reúne diferentes maneiras de participar — no seu tempo e do seu jeito.</p>
         </div>
         <div class="feature-grid">
-          <article class="feature-card feature-card-tall reveal"><span class="card-number">01</span><div class="feature-icon icon-camera">◌</div><h3>Compartilhar</h3><p>Publique fotos, vídeos e ideias que traduzem o seu ponto de vista. Um diário aberto, um portfólio ou só aquele momento que merecia ser guardado.</p><a class="card-link" href="#formatos">Ver formatos <span aria-hidden="true">↗</span></a></article>
-          <article class="feature-card feature-card-dark reveal reveal-delay"><span class="card-number">02</span><div class="feature-icon icon-compass">✧</div><h3>Descobrir</h3><p>Explore assuntos, criadores, lugares e tendências a partir do que desperta sua curiosidade — e encontre referências além do seu círculo.</p><a class="card-link" href="#comunidade">Encontrar interesses <span aria-hidden="true">↗</span></a></article>
-          <article class="feature-card feature-card-gradient reveal reveal-delay-2"><span class="card-number">03</span><div class="feature-icon icon-chat">◒</div><h3>Conversar</h3><p>Reaja, comente, compartilhe e leve a conversa para o direct. A plataforma aproxima pessoas mesmo quando elas estão longe.</p><a class="card-link" href="#objetivos">Entender a conexão <span aria-hidden="true">↗</span></a></article>
-          <article class="feature-card feature-card-outline reveal"><span class="card-number">04</span><div class="feature-icon icon-spark">✳</div><h3>Construir presença</h3><p>Para criadores, projetos e marcas, o Instagram funciona como uma vitrine viva: identidade, comunidade e relação em um mesmo espaço.</p><a class="card-link" href="#comunidade">Ver possibilidades <span aria-hidden="true">↗</span></a></article>
+          <article class="feature-card feature-card-tall reveal" data-tilt><span class="card-number">01</span><div class="feature-icon icon-camera">◌</div><h3>Compartilhar</h3><p>Publique fotos, vídeos e ideias que traduzem o seu ponto de vista. Um diário aberto, um portfólio ou só aquele momento que merecia ser guardado.</p><a class="card-link" href="#formatos">Ver formatos <span aria-hidden="true">↗</span></a></article>
+          <article class="feature-card feature-card-dark reveal reveal-delay" data-tilt><span class="card-number">02</span><div class="feature-icon icon-compass">✧</div><h3>Descobrir</h3><p>Explore assuntos, criadores, lugares e tendências a partir do que desperta sua curiosidade — e encontre referências além do seu círculo.</p><a class="card-link" href="#comunidade">Encontrar interesses <span aria-hidden="true">↗</span></a></article>
+          <article class="feature-card feature-card-gradient reveal reveal-delay-2" data-tilt><span class="card-number">03</span><div class="feature-icon icon-chat">◒</div><h3>Conversar</h3><p>Reaja, comente, compartilhe e leve a conversa para o direct. A plataforma aproxima pessoas mesmo quando elas estão longe.</p><a class="card-link" href="#objetivos">Entender a conexão <span aria-hidden="true">↗</span></a></article>
+          <article class="feature-card feature-card-outline reveal" data-tilt><span class="card-number">04</span><div class="feature-icon icon-spark">✳</div><h3>Construir presença</h3><p>Para criadores, projetos e marcas, o Instagram funciona como uma vitrine viva: identidade, comunidade e relação em um mesmo espaço.</p><a class="card-link" href="#comunidade">Ver possibilidades <span aria-hidden="true">↗</span></a></article>
         </div>
       </section>
 
@@ -129,7 +133,7 @@
       </section>
 
       <section class="cta-section section-shell" id="acesso" aria-labelledby="cta-title">
-        <div class="cta-inner reveal"><div class="cta-symbol" aria-hidden="true"><span></span></div><p class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span> Agora é com você</p><h2 id="cta-title">O próximo capítulo<br /><em>começa no seu olhar.</em></h2><p>Explore o Instagram no seu ritmo. Descubra, compartilhe e conecte-se ao que faz sentido para você.</p><a class="button button-light" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Acessar o Instagram <span aria-hidden="true">↗</span></a></div>
+        <div class="cta-inner reveal"><div class="cta-symbol" aria-hidden="true"><span></span></div><p class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span> Agora é com você</p><h2 id="cta-title">O próximo capítulo<br /><em>começa no seu olhar.</em></h2><p>Explore o Instagram no seu ritmo. Descubra, compartilhe e conecte-se ao que faz sentido para você.</p><a class="button button-light" href="https://www.instagram.com/" target="_blank" rel="noreferrer" data-magnetic>Acessar o Instagram <span aria-hidden="true">↗</span></a></div>
       </section>
     </main>
 

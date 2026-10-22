@@ -49,3 +49,73 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '-35% 0px -55% 0px' });
 
 sections.forEach((section) => sectionObserver.observe(section));
+
+const finePointer = window.matchMedia('(pointer: fine)').matches;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorRing = document.querySelector('.cursor-ring');
+const cursorGlow = document.querySelector('.cursor-glow');
+
+if (finePointer && !reducedMotion && cursorDot && cursorRing && cursorGlow) {
+  let pointerX = window.innerWidth / 2;
+  let pointerY = window.innerHeight / 2;
+  let ringX = pointerX;
+  let ringY = pointerY;
+  let glowX = pointerX;
+  let glowY = pointerY;
+
+  const renderCursor = () => {
+    ringX += (pointerX - ringX) * 0.18;
+    ringY += (pointerY - ringY) * 0.18;
+    glowX += (pointerX - glowX) * 0.08;
+    glowY += (pointerY - glowY) * 0.08;
+    cursorDot.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
+    cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+    cursorGlow.style.transform = `translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+    document.body.style.setProperty('--pointer-x', `${pointerX}px`);
+    document.body.style.setProperty('--pointer-y', `${pointerY}px`);
+    requestAnimationFrame(renderCursor);
+  };
+
+  window.addEventListener('pointermove', (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    cursorGlow.style.opacity = '1';
+  }, { passive: true });
+
+  window.addEventListener('pointerleave', () => { cursorGlow.style.opacity = '0'; });
+
+  const interactiveElements = document.querySelectorAll('a, button, [data-tilt], [data-magnetic]');
+  interactiveElements.forEach((element) => {
+    element.addEventListener('pointerenter', () => {
+      cursorDot.classList.add('is-hovering');
+      cursorRing.classList.add('is-hovering');
+    });
+    element.addEventListener('pointerleave', () => {
+      cursorDot.classList.remove('is-hovering');
+      cursorRing.classList.remove('is-hovering');
+    });
+  });
+
+  document.querySelectorAll('[data-magnetic]').forEach((element) => {
+    element.addEventListener('pointermove', (event) => {
+      const rect = element.getBoundingClientRect();
+      const x = (event.clientX - rect.left - rect.width / 2) * 0.14;
+      const y = (event.clientY - rect.top - rect.height / 2) * 0.14;
+      element.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    element.addEventListener('pointerleave', () => { element.style.transform = ''; });
+  });
+
+  document.querySelectorAll('[data-tilt]').forEach((element) => {
+    element.addEventListener('pointermove', (event) => {
+      const rect = element.getBoundingClientRect();
+      const rotateX = ((event.clientY - rect.top) / rect.height - 0.5) * -4;
+      const rotateY = ((event.clientX - rect.left) / rect.width - 0.5) * 4;
+      element.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+    element.addEventListener('pointerleave', () => { element.style.transform = ''; });
+  });
+
+  renderCursor();
+}
