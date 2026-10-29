@@ -148,5 +148,38 @@ formatCards.forEach((card) => {
   card.addEventListener('focus', () => setFormat(card.dataset.format));
 });
 
+const scrollMascot = document.querySelector('[data-scroll-mascot]');
+if (scrollMascot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.innerWidth > 700) {
+  const mascotLabel = scrollMascot.querySelector('[data-mascot-label]');
+  const mascotCount = scrollMascot.querySelector('[data-mascot-count]');
+  const mascotSections = [
+    { id: 'inicio', label: 'olhe ao redor', mood: 'look' },
+    { id: 'funcoes', label: 'descubra', mood: 'explore' },
+    { id: 'formatos', label: 'crie seu ritmo', mood: 'create' },
+    { id: 'objetivos', label: 'dê contexto', mood: 'connect' },
+    { id: 'comunidade', label: 'encontre os seus', mood: 'community' },
+    { id: 'acesso', label: 'agora é com você', mood: 'create' }
+  ];
+  let mascotTicking = false;
+  const updateMascot = () => {
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const progress = Math.min(1, Math.max(0, window.scrollY / max));
+    document.documentElement.style.setProperty('--scroll-progress', progress.toFixed(3));
+    let active = mascotSections[0];
+    mascotSections.forEach((item) => {
+      const section = document.getElementById(item.id);
+      if (section && section.getBoundingClientRect().top < window.innerHeight * .48) active = item;
+    });
+    scrollMascot.dataset.mood = active.mood;
+    mascotLabel.textContent = active.label;
+    mascotCount.textContent = String(mascotSections.indexOf(active) + 1).padStart(2, '0');
+    scrollMascot.classList.toggle('is-near', progress > .04 && progress < .96);
+    mascotTicking = false;
+  };
+  window.addEventListener('scroll', () => { if (!mascotTicking) { requestAnimationFrame(updateMascot); mascotTicking = true; } }, { passive: true });
+  window.addEventListener('resize', updateMascot, { passive: true });
+  updateMascot();
+}
+
   renderCursor();
 }
