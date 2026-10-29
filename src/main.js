@@ -185,16 +185,41 @@ if (scrollMascot && !window.matchMedia('(prefers-reduced-motion: reduce)').match
 const mascotFinePointer = window.matchMedia('(pointer: fine)').matches;
 if (scrollMascot && mascotFinePointer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   let lastSide = 'right';
-  let dashTimer;
+  let walkFrame = 0;
+  let walkTimer;
+  const walkToSide = (side) => {
+    const start = scrollMascot.getBoundingClientRect().left;
+    const inset = window.innerWidth <= 980 ? 10 : 18;
+    const target = side === 'left' ? inset : window.innerWidth - inset - scrollMascot.getBoundingClientRect().width;
+    const distance = target - start;
+    const duration = 860;
+    const startedAt = performance.now();
+    cancelAnimationFrame(walkFrame);
+    scrollMascot.dataset.side = side;
+    scrollMascot.classList.add('is-dashing');
+    const step = (now) => {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = progress < .5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      scrollMascot.style.left = `${start + distance * eased}px`;
+      if (progress < 1) walkFrame = requestAnimationFrame(step);
+      else scrollMascot.classList.remove('is-dashing');
+    };
+    walkFrame = requestAnimationFrame(step);
+  };
   scrollMascot.dataset.side = lastSide;
+  scrollMascot.style.left = `${window.innerWidth - (window.innerWidth <= 980 ? 10 : 18) - scrollMascot.getBoundingClientRect().width}px`;
   window.addEventListener('pointermove', (event) => {
     const nextSide = event.clientX < window.innerWidth / 2 ? 'left' : 'right';
     if (nextSide === lastSide) return;
-    scrollMascot.dataset.side = nextSide;
-    scrollMascot.classList.add('is-dashing');
-    clearTimeout(dashTimer);
-    dashTimer = setTimeout(() => scrollMascot.classList.remove('is-dashing'), 760);
     lastSide = nextSide;
+    clearTimeout(walkTimer);
+    walkToSide(nextSide);
+  }, { passive: true });
+  window.addEventListener('resize', () => {
+    if (!scrollMascot.classList.contains('is-dashing')) {
+      const inset = window.innerWidth <= 980 ? 10 : 18;
+      scrollMascot.style.left = `${lastSide === 'left' ? inset : window.innerWidth - inset - scrollMascot.getBoundingClientRect().width}px`;
+    }
   }, { passive: true });
 }
 

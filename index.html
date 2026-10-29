@@ -299,6 +299,10 @@ body{color:var(--ink);background:radial-gradient(circle at 80% -5%,rgba(131,58,1
 
 /* quick walking transition */
 .scroll-mascot{transition:top .7s cubic-bezier(.22,.8,.22,1),left .72s cubic-bezier(.2,.82,.22,1),right .72s cubic-bezier(.2,.82,.22,1),opacity .35s ease}.scroll-mascot.is-dashing .mascot-orbit{animation:mascotRun .72s cubic-bezier(.2,.82,.22,1)}.scroll-mascot.is-dashing .mascot-trail{width:110px;height:32px;border-style:dashed;border-radius:50%;opacity:.95;animation:mascotSpeed .72s ease-out}.scroll-mascot.is-dashing .mascot-face{animation:mascotBop .18s ease-in-out 4 alternate}.scroll-mascot.is-dashing::after{content:"";position:absolute;top:50%;width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--pink));opacity:.55;animation:mascotStreak .72s ease-out}.scroll-mascot[data-side="right"].is-dashing::after{right:65px;transform-origin:right}.scroll-mascot[data-side="left"].is-dashing::after{left:65px;transform:scaleX(-1);transform-origin:right}@keyframes mascotRun{0%{transform:scale(1) rotate(0)}22%{transform:scale(.88,1.12) rotate(-12deg)}48%{transform:scale(1.1,.9) rotate(10deg)}73%{transform:scale(.92,1.08) rotate(-7deg)}100%{transform:scale(1) rotate(0)}}@keyframes mascotBop{to{transform:translateY(-4px) rotate(3deg)}}@keyframes mascotSpeed{0%{transform:translate(-50%,-50%) scaleX(.45);opacity:.2}45%{transform:translate(-50%,-50%) scaleX(1.35);opacity:1}100%{transform:translate(-50%,-50%) scaleX(.9);opacity:.35}}@keyframes mascotStreak{0%{width:0;opacity:0}35%{width:70px;opacity:.7}100%{width:24px;opacity:0}}
+
+/* real edge-to-edge walk */
+.scroll-mascot{left:18px!important;right:auto!important;transition:top .7s cubic-bezier(.22,.8,.22,1),opacity .35s ease}.scroll-mascot[data-side="right"],.scroll-mascot[data-side="left"]{right:auto!important;left:18px}.scroll-mascot.is-dashing .mascot-orbit{animation:mascotRun .86s cubic-bezier(.2,.82,.22,1)}.scroll-mascot.is-dashing .mascot-trail{animation:mascotSpeed .86s ease-out}
+@media(max-width:980px){.scroll-mascot{left:10px!important}.scroll-mascot[data-side="right"],.scroll-mascot[data-side="left"]{left:10px}}
     </style>
   </head>
   <body>
@@ -632,16 +636,41 @@ if (scrollMascot && !window.matchMedia('(prefers-reduced-motion: reduce)').match
 const mascotFinePointer = window.matchMedia('(pointer: fine)').matches;
 if (scrollMascot && mascotFinePointer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   let lastSide = 'right';
-  let dashTimer;
+  let walkFrame = 0;
+  let walkTimer;
+  const walkToSide = (side) => {
+    const start = scrollMascot.getBoundingClientRect().left;
+    const inset = window.innerWidth <= 980 ? 10 : 18;
+    const target = side === 'left' ? inset : window.innerWidth - inset - scrollMascot.getBoundingClientRect().width;
+    const distance = target - start;
+    const duration = 860;
+    const startedAt = performance.now();
+    cancelAnimationFrame(walkFrame);
+    scrollMascot.dataset.side = side;
+    scrollMascot.classList.add('is-dashing');
+    const step = (now) => {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = progress < .5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      scrollMascot.style.left = `${start + distance * eased}px`;
+      if (progress < 1) walkFrame = requestAnimationFrame(step);
+      else scrollMascot.classList.remove('is-dashing');
+    };
+    walkFrame = requestAnimationFrame(step);
+  };
   scrollMascot.dataset.side = lastSide;
+  scrollMascot.style.left = `${window.innerWidth - (window.innerWidth <= 980 ? 10 : 18) - scrollMascot.getBoundingClientRect().width}px`;
   window.addEventListener('pointermove', (event) => {
     const nextSide = event.clientX < window.innerWidth / 2 ? 'left' : 'right';
     if (nextSide === lastSide) return;
-    scrollMascot.dataset.side = nextSide;
-    scrollMascot.classList.add('is-dashing');
-    clearTimeout(dashTimer);
-    dashTimer = setTimeout(() => scrollMascot.classList.remove('is-dashing'), 760);
     lastSide = nextSide;
+    clearTimeout(walkTimer);
+    walkToSide(nextSide);
+  }, { passive: true });
+  window.addEventListener('resize', () => {
+    if (!scrollMascot.classList.contains('is-dashing')) {
+      const inset = window.innerWidth <= 980 ? 10 : 18;
+      scrollMascot.style.left = `${lastSide === 'left' ? inset : window.innerWidth - inset - scrollMascot.getBoundingClientRect().width}px`;
+    }
   }, { passive: true });
 }
 
