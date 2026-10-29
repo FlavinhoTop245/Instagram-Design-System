@@ -193,7 +193,7 @@ if (scrollMascot && mascotFinePointer && !window.matchMedia('(prefers-reduced-mo
     scrollMascot.dataset.side = nextSide;
     scrollMascot.classList.add('is-dashing');
     clearTimeout(dashTimer);
-    dashTimer = setTimeout(() => scrollMascot.classList.remove('is-dashing'), 320);
+    dashTimer = setTimeout(() => scrollMascot.classList.remove('is-dashing'), 760);
     lastSide = nextSide;
   }, { passive: true });
 }
