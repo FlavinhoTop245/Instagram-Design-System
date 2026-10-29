@@ -181,5 +181,24 @@ if (scrollMascot && !window.matchMedia('(prefers-reduced-motion: reduce)').match
   updateMascot();
 }
 
+
+const mascotFinePointer = window.matchMedia('(pointer: fine)').matches;
+if (scrollMascot && mascotFinePointer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let lastMouseX = window.innerWidth / 2;
+  let dashTimer;
+  window.addEventListener('pointermove', (event) => {
+    const direction = event.clientX >= lastMouseX ? 'right' : 'left';
+    const distance = Math.abs(event.clientX - lastMouseX);
+    document.documentElement.style.setProperty('--mascot-x', `${event.clientX}px`);
+    scrollMascot.dataset.side = event.clientX < window.innerWidth / 2 ? 'left' : 'right';
+    if (distance > 18) {
+      scrollMascot.classList.add('is-dashing');
+      clearTimeout(dashTimer);
+      dashTimer = setTimeout(() => scrollMascot.classList.remove('is-dashing'), 240);
+    }
+    lastMouseX = event.clientX;
+  }, { passive: true });
+}
+
   renderCursor();
 }
