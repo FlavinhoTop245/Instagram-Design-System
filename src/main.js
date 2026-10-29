@@ -117,5 +117,36 @@ if (finePointer && !reducedMotion && cursorDot && cursorRing && cursorGlow) {
     element.addEventListener('pointerleave', () => { element.style.transform = ''; });
   });
 
+const formatStage = document.querySelector('[data-format-stage]');
+const formatPhone = document.querySelector('[data-format-phone]');
+const formatCards = document.querySelectorAll('[data-format]');
+const formatData = {
+  post: { author:'seu olhar', art:'um momento<br />para guardar', caption:'Publicação', sub:'um registro para rever, salvar e compartilhar.', title:'Publicação', copy:'um registro que fica.' },
+  stories: { author:'agora', art:'só por<br />24 horas', caption:'Stories', sub:'recortes leves para dividir o que está acontecendo.', title:'Stories', copy:'um recorte que passa.' },
+  reels: { author:'descoberta', art:'dê play<br />a uma ideia', caption:'Reels', sub:'vídeos curtos para criar, editar e encontrar referências.', title:'Reels', copy:'uma ideia em movimento.' },
+  live: { author:'ao vivo', art:'a conversa<br />começa aqui', caption:'Ao vivo e Direct', sub:'presença em tempo real para estar perto de verdade.', title:'Ao vivo e Direct', copy:'uma conversa que aproxima.' }
+};
+const setFormat = (key) => {
+  const data = formatData[key];
+  if (!data || !formatStage) return;
+  formatStage.dataset.active = key;
+  formatStage.querySelector('[data-format-author]').textContent = data.author;
+  formatStage.querySelector('[data-format-art]').innerHTML = data.art;
+  formatStage.querySelector('[data-format-caption]').textContent = data.caption;
+  formatStage.querySelector('[data-format-subcaption]').textContent = data.sub;
+  formatStage.querySelector('[data-format-pop-title]').textContent = data.title;
+  formatStage.querySelector('[data-format-pop-copy]').textContent = data.copy;
+  formatCards.forEach((card) => {
+    const active = card.dataset.format === key;
+    card.classList.toggle('is-active', active);
+    card.setAttribute('aria-selected', String(active));
+  });
+};
+formatCards.forEach((card) => {
+  card.addEventListener('click', () => setFormat(card.dataset.format));
+  card.addEventListener('mouseenter', () => setFormat(card.dataset.format));
+  card.addEventListener('focus', () => setFormat(card.dataset.format));
+});
+
   renderCursor();
 }
