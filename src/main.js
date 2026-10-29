@@ -50,6 +50,41 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 sections.forEach((section) => sectionObserver.observe(section));
 
+
+const scrollStory = document.querySelector('[data-scroll-story]');
+if (scrollStory) {
+  const storyStage = scrollStory.querySelector('[data-story-stage]');
+  const storyProgress = scrollStory.querySelector('[data-story-progress]');
+  const storyCaption = scrollStory.querySelector('[data-story-caption]');
+  const storyMedia = scrollStory.querySelector('[data-story-media]');
+  const storyMeta = scrollStory.querySelector('[data-story-meta]');
+  const storyBubbles = [...scrollStory.querySelectorAll('[data-story-bubble]')];
+  const storyCopy = [
+    ['uma ideia<br />aparece','rascunho salvo','tudo começa com uma curiosidade.'],
+    ['dê forma<br />ao olhar','filtro escolhido','uma referência vira linguagem.'],
+    ['compartilhe<br />o momento','publicado agora','o que era seu encontra alguém.'],
+    ['a conversa<br />começa aqui','2 novas mensagens','e a experiência continua do outro lado.']
+  ];
+  let storyTicking = false;
+  const updateStory = () => {
+    const rect = scrollStory.getBoundingClientRect();
+    const max = Math.max(1, scrollStory.offsetHeight - window.innerHeight);
+    const progress = Math.min(1, Math.max(0, -rect.top / max));
+    const scene = Math.min(3, Math.floor(progress * 4.01));
+    storyStage.dataset.scene = String(scene);
+    storyProgress.style.width = `${Math.round(progress * 100)}%`;
+    storyMedia.innerHTML = storyCopy[scene][0];
+    storyMeta.textContent = storyCopy[scene][1];
+    storyCaption.textContent = storyCopy[scene][2];
+    storyBubbles.forEach((bubble,index) => bubble.classList.toggle('is-current', index === scene));
+    scrollStory.classList.toggle('is-complete', progress > .92);
+    storyTicking = false;
+  };
+  window.addEventListener('scroll', () => { if (!storyTicking) { requestAnimationFrame(updateStory); storyTicking = true; } }, { passive:true });
+  window.addEventListener('resize', updateStory, { passive:true });
+  updateStory();
+}
+
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const cursorDot = document.querySelector('.cursor-dot');
